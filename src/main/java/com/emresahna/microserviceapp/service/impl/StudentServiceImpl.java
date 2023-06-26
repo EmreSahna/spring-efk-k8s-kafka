@@ -54,6 +54,6 @@ public class StudentServiceImpl implements StudentService {
     }
 
     public StudentNotFoundException throwStudentNotFoundException() {
-        return new StudentNotFoundException("Student not found");
+        return new StudentNotFoundException();
     }
 }
