@@ -8,6 +8,7 @@ import com.emresahna.microserviceapp.mapper.StudentMapper;
 import com.emresahna.microserviceapp.repository.StudentRepository;
 import com.emresahna.microserviceapp.service.StudentService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
 public class StudentServiceImpl implements StudentService {
     private final StudentRepository studentRepository;
     private final StudentMapper studentMapper;
+    private final KafkaTemplate<String, StudentResponse> kafkaTemplate;
 
     @Override
     public void createStudent(CreateStudentRequest request){
@@ -26,10 +28,14 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public List<StudentResponse> getAllStudents(){
-        return studentRepository.findAll()
+        var students = studentRepository.findAll()
                 .stream()
                 .map(studentMapper::mapStudentToResponse)
                 .collect(Collectors.toList());
+
+        students.forEach(studentResponse -> kafkaTemplate.send("student-topic", studentResponse));
+
+        return students;
     }
 
     @Override
