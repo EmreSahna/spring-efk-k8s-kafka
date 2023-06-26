@@ -10,7 +10,6 @@ databaseChangeLog:
                   type: bigint
                   constraints:
                     primaryKey: true
-
               - column:
                   name: name
                   type: varchar(255)
@@ -20,4 +19,10 @@ databaseChangeLog:
               - column:
                   name: group_name
                   type: varchar(255)
+            tableName: students
+        - addAutoIncrement:
+            columnDataType: bigint
+            columnName: id
+            defaultOnNull: false
+            generationType: ALWAYS
             tableName: students
