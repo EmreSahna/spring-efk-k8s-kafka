@@ -1,0 +1,97 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: microservice-app
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: microservice-app-deployment
+  namespace: microservice-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: microservice-app
+  template:
+    metadata:
+      labels:
+        app: microservice-app
+    spec:
+      containers:
+        - name: microservice-app
+          image: emresahna/microservice-app:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:mysql://mysql-service:3306/your_database_name
+            - name: SPRING_DATASOURCE_USERNAME
+              value: your_mysql_username
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: your_mysql_password
+          volumeMounts:
+            - name: log-volume
+              mountPath: /logs
+
+          volumes:
+            - name: log-volume
+              emptyDir: { }
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: spring-app-service
+  namespace: spring-app
+spec:
+  selector:
+    app: spring-app
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: logstash-service
+  namespace: spring-app
+spec:
+  selector:
+    app: logstash
+  ports:
+    - protocol: TCP
+      port: 5000
+      targetPort: 5000
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kafka-service
+  namespace: spring-app
+spec:
+  selector:
+    app: kafka
+  ports:
+    - protocol: TCP
+      port: 9092
+      targetPort: 9092
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-service
+  namespace: spring-app
+spec:
+  selector:
+    app: mysql
+  ports:
+    - protocol: TCP
+      port: 3306
+      targetPort: 3306
