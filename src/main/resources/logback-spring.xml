@@ -1,29 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
     <include resource="org/springframework/boot/logging/logback/base.xml"/>
-    <appender name="logstash" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
-        <destination>localhost:5000</destination>
-        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
-                <providers>
-                    <mdc/>
-                    <context/>
-                    <logLevel/>
-                    <loggerName/>
-                    <pattern>
-                        <pattern>
-                            {
-                            "app": "test-log"
-                            }
-                        </pattern>
-                    </pattern>
-                    <threadName/>
-                    <message/>
-                    <logstashMarkers/>
-                    <stackTrace/>
-                </providers>
-        </encoder>
+    <appender name="FLUENT" class="ch.qos.logback.more.appenders.DataFluentAppender">
+        <tag>uniapp</tag>
+        <label>normal</label>
+        <remoteHost>localhost</remoteHost>
+        <port>24224</port>
     </appender>
-    <root level="INFO">
-        <appender-ref ref="logstash"/>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>
+                %d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n
+            </Pattern>
+        </layout>
+    </appender>
+
+    <root level="info">
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FLUENT" />
     </root>
 </configuration>

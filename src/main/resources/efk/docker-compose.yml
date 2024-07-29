@@ -29,23 +29,21 @@ services:
     networks:
       - elastic
 
-  logstash:
-    image: docker.elastic.co/logstash/logstash:8.3.3
-    container_name: logstash_springboot
+  fluentd:
+    container_name: fluentd_springboot
+    image: "customized-fluentd-with-elasticsearch-plugin"
+    build:
+      context: ./fluentd
+      dockerfile: Dockerfile
     volumes:
-      - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
-      - ./logstash/pipeline:/usr/share/logstash/pipeline:ro
+      - ./fluentd/config:/fluentd/etc
     ports:
-      - "5044:5044"
-      - "5000:5000/tcp"
-      - "5000:5000/udp"
-      - "9600:9600"
-    environment:
-      LS_JAVA_OPTS: "-Xmx256m -Xms256m"
+      - "24224:24224"
+      - "24224:24224/udp"
     networks:
       - elastic
     depends_on:
-      - elasticsearch
+     - elasticsearch
 
 networks:
   elastic:
