@@ -3,7 +3,8 @@ package me.emresahna.uniapp.service.impl;
 import lombok.RequiredArgsConstructor;
 import me.emresahna.uniapp.dto.request.course.CreateCourseRequest;
 import me.emresahna.uniapp.dto.response.course.CourseResponse;
-import me.emresahna.uniapp.exception.ResourceNotFoundException;
+import me.emresahna.uniapp.exception.ExceptionType;
+import me.emresahna.uniapp.exception.exceptions.ResourceNotFoundException;
 import me.emresahna.uniapp.mapper.CourseMapper;
 import me.emresahna.uniapp.model.Course;
 import me.emresahna.uniapp.repository.CourseRepository;
@@ -40,6 +41,6 @@ public class CourseServiceImpl implements CourseService {
     }
 
     public ResourceNotFoundException throwCourseNotFoundException() {
-        return new ResourceNotFoundException("COURSE_NOT_FOUND");
+        return new ResourceNotFoundException(ExceptionType.COURSE_NOT_FOUND);
     }
 }

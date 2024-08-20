@@ -1,25 +1,21 @@
 package me.emresahna.uniapp.exception;
 
 import lombok.Getter;
+import lombok.ToString;
+import org.springframework.http.HttpStatus;
 
 @Getter
+@ToString
 public class GenericException extends RuntimeException {
 
-    private final String code;
+    private final int code;
     private final String message;
-    private final int status;
+    private final HttpStatus status;
 
-    public GenericException(String code, String message, int status) {
-        super(message);
-        this.status = status;
-        this.code = code;
-        this.message = message;
+    public GenericException(ExceptionType exceptionType) {
+        super(exceptionType.getMessage());
+        this.code = exceptionType.getCode();
+        this.message = exceptionType.getMessage();
+        this.status = exceptionType.getStatus();
     }
-
-    @Override
-    public String toString() {
-        return String.format("%s{status=%d, code='%s', message='%s'}",
-                this.getClass().getSimpleName(), status, code, message);
-    }
-
 }

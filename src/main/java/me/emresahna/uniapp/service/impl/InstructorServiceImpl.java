@@ -2,7 +2,8 @@ package me.emresahna.uniapp.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import me.emresahna.uniapp.dto.request.instructor.CreateInstructorRequest;
-import me.emresahna.uniapp.exception.ResourceNotFoundException;
+import me.emresahna.uniapp.exception.ExceptionType;
+import me.emresahna.uniapp.exception.exceptions.ResourceNotFoundException;
 import me.emresahna.uniapp.mapper.InstructorMapper;
 import me.emresahna.uniapp.model.Instructor;
 import me.emresahna.uniapp.repository.InstructorRepository;
@@ -32,6 +33,6 @@ public class InstructorServiceImpl implements InstructorService {
     }
 
     public ResourceNotFoundException throwInstructorNotFoundException() {
-        return new ResourceNotFoundException("INSTRUCTOR_NOT_FOUND");
+        return new ResourceNotFoundException(ExceptionType.INSTRUCTOR_NOT_FOUND);
     }
 }

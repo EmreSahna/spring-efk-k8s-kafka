@@ -1,9 +1,8 @@
 package me.emresahna.uniapp.dto.request.student;
 
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
 public class CreateStudentRequest {
@@ -11,7 +10,9 @@ public class CreateStudentRequest {
     private String name;
     @NotBlank(message = "exception.emptySurname")
     private String surname;
+    @NotEmpty
     private String username;
+    @NotEmpty
     private String password;
     private String email;
 }

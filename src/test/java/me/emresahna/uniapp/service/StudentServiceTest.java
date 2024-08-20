@@ -3,7 +3,7 @@ package me.emresahna.uniapp.service;
 import me.emresahna.uniapp.dto.response.student.StudentResponse;
 import me.emresahna.uniapp.dto.request.student.CreateStudentRequest;
 import me.emresahna.uniapp.dto.request.student.UpdateStudentRequest;
-import me.emresahna.uniapp.exception.ResourceNotFoundException;
+import me.emresahna.uniapp.exception.exceptions.ResourceNotFoundException;
 import me.emresahna.uniapp.mapper.StudentMapper;
 import me.emresahna.uniapp.model.Student;
 import me.emresahna.uniapp.repository.StudentRepository;
