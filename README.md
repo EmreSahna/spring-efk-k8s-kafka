@@ -1,4 +1,4 @@
-# Spring Boot EFK Stack, Kubernetes, Kafka
+# Student Information System
 This application aims to create a student information system.
 
 ## Tech Stack
@@ -7,3 +7,12 @@ This application aims to create a student information system.
 - Liquibase
 - EFK (Elasticsearch, Fluentd, Kibana)
 - Resilience4j
+- OpenAPI
+- Docker
+
+## Features
+- I18n
+- Swagger.io
+- Custom Exceptions
+- Containerization
+- Custom Logging
