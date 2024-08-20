@@ -8,6 +8,7 @@ import me.emresahna.uniapp.service.CourseAssignmentService;
 import me.emresahna.uniapp.service.CourseService;
 import me.emresahna.uniapp.service.InstructorService;
 import me.emresahna.uniapp.service.StudentService;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,6 +17,7 @@ public class CourseAssignmentServiceImpl implements CourseAssignmentService {
     private final CourseService courseService;
     private final InstructorService instructorService;
     private final StudentService studentService;
+    private final KafkaTemplate<String, Object> kafkaTemplate;
 
     @Override
     public void assignInstructorToCourse(Long courseId, Long instructorId) {
@@ -39,5 +41,7 @@ public class CourseAssignmentServiceImpl implements CourseAssignmentService {
 
         courseService.saveCourse(course);
         studentService.saveStudent(student);
+
+        kafkaTemplate.send("student-assign-course-topic", courseService.getCourse(courseId));
     }
 }
